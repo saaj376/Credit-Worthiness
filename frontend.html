@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creditworthiness Predictor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom styles for loading spinner */
+        .loader {
+            border-top-color: #3498db;
+            -webkit-animation: spinner 1.5s linear infinite;
+            animation: spinner 1.5s linear infinite;
+        }
+        @-webkit-keyframes spinner {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+        @keyframes spinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Creditworthiness Prediction</h1>
+            <p class="text-md text-gray-600 mt-2">Enter the applicant's details below to get a creditworthiness prediction.</p>
+        </header>
+
+        <main class="max-w-4xl mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg">
+            <form id="prediction-form" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Column 1 -->
+                <div>
+                    <!-- Age -->
+                    <div class="mb-4">
+                        <label for="Age" class="block text-sm font-medium text-gray-700 mb-1">Age</label>
+                        <input type="number" id="Age" name="Age" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g., 35">
+                    </div>
+
+                    <!-- Employment Status -->
+                    <div class="mb-4">
+                        <label for="Employment_Status" class="block text-sm font-medium text-gray-700 mb-1">Employment Status</label>
+                        <select id="Employment_Status" name="Employment_Status" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>Employed</option>
+                            <option>Self-employed</option>
+                            <option>Unemployed</option>
+                            <option>Student</option>
+                        </select>
+                    </div>
+
+                    <!-- Residential Stability -->
+                    <div class="mb-4">
+                        <label for="Residential_Stability" class="block text-sm font-medium text-gray-700 mb-1">Residential Stability (Years)</label>
+                        <input type="number" id="Residential_Stability" name="Residential_Stability" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g., 10">
+                    </div>
+
+                    <!-- Bank Account Tenure -->
+                    <div class="mb-4">
+                        <label for="Bank_Account_Tenure" class="block text-sm font-medium text-gray-700 mb-1">Bank Account Tenure (Years)</label>
+                        <input type="number" id="Bank_Account_Tenure" name="Bank_Account_Tenure" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="e.g., 5">
+                    </div>
+                    
+                    <!-- Educational Background -->
+                    <div class="mb-4">
+                        <label for="Educational_Background" class="block text-sm font-medium text-gray-700 mb-1">Educational Background</label>
+                        <select id="Educational_Background" name="Educational_Background" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>High School</option>
+                            <option>Bachelor's</option>
+                            <option>Master's</option>
+                            <option>PhD</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <!-- Utility Payment History -->
+                    <div class="mb-4">
+                        <label for="Utility_Payment_History" class="block text-sm font-medium text-gray-700 mb-1">Utility Payment History</label>
+                        <select id="Utility_Payment_History" name="Utility_Payment_History" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>Consistent</option>
+                            <option>Inconsistent</option>
+                            <option>New</option>
+                        </select>
+                    </div>
+
+                    <!-- Rent Payment History -->
+                    <div class="mb-4">
+                        <label for="Rent_Payment_History" class="block text-sm font-medium text-gray-700 mb-1">Rent Payment History</label>
+                        <select id="Rent_Payment_History" name="Rent_Payment_History" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>Consistent</option>
+                            <option>Inconsistent</option>
+                            <option>New</option>
+                        </select>
+                    </div>
+
+                    <!-- Telecommunications Payment History -->
+                    <div class="mb-4">
+                        <label for="Telecommunications_Payment_History" class="block text-sm font-medium text-gray-700 mb-1">Telecom Payment History</label>
+                        <select id="Telecommunications_Payment_History" name="Telecommunications_Payment_History" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>Consistent</option>
+                            <option>Inconsistent</option>
+                            <option>New</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Online Shopping Behavior -->
+                    <div class="mb-4">
+                        <label for="Online_Shopping_Behavior" class="block text-sm font-medium text-gray-700 mb-1">Online Shopping Behavior</label>
+                        <select id="Online_Shopping_Behavior" name="Online_Shopping_Behavior" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>Frequent</option>
+                            <option>Occasional</option>
+                            <option>None</option>
+                        </select>
+                    </div>
+
+                    <!-- Social Media Footprint -->
+                    <div class="mb-4">
+                        <label for="Social_Media_Footprint" class="block text-sm font-medium text-gray-700 mb-1">Social Media Footprint</label>
+                        <select id="Social_Media_Footprint" name="Social_Media_Footprint" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>High</option>
+                            <option>Medium</option>
+                            <option>Low</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Gig Economy Participation -->
+                    <div class="mb-4">
+                        <label for="Gig_Economy_Participation" class="block text-sm font-medium text-gray-700 mb-1">Gig Economy Participation</label>
+                        <select id="Gig_Economy_Participation" name="Gig_Economy_Participation" required class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>Full-Time</option>
+                            <option>Part-Time</option>
+                            <option>None</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="md:col-span-2 text-center mt-4">
+                    <button type="submit" id="submit-btn" class="w-full md:w-1/2 bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300 ease-in-out transform hover:scale-105">
+                        <span id="btn-text">Predict Creditworthiness</span>
+                        <div id="loader" class="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-6 w-6 hidden mx-auto"></div>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Result Display -->
+            <div id="result-container" class="mt-8 text-center hidden">
+                 <h2 class="text-2xl font-semibold mb-4 text-gray-800">Prediction Result</h2>
+                 <div id="result-box" class="p-6 rounded-xl text-white text-2xl font-bold">
+                     <span id="result-text"></span>
+                 </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JavaScript to handle form submission and communication with the backend -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('prediction-form');
+            const resultContainer = document.getElementById('result-container');
+            const resultBox = document.getElementById('result-box');
+            const resultText = document.getElementById('result-text');
+            const submitBtn = document.getElementById('submit-btn');
+            const btnText = document.getElementById('btn-text');
+            const loader = document.getElementById('loader');
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                // Show loader and disable button
+                btnText.classList.add('hidden');
+                loader.classList.remove('hidden');
+                submitBtn.disabled = true;
+                resultContainer.classList.add('hidden');
+
+                // Collect form data into an object
+                const formData = new FormData(form);
+                const data = {};
+                for (let [key, value] of formData.entries()) {
+                    // Convert numeric fields from string to number
+                    if (key === 'Age' || key === 'Residential_Stability' || key === 'Bank_Account_Tenure') {
+                        data[key] = parseInt(value, 10);
+                    } else {
+                        data[key] = value;
+                    }
+                }
+
+                try {
+                    // Send the data to the Flask backend
+                    const response = await fetch('http://127.0.0.1:5000/predict', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || 'Something went wrong');
+                    }
+                    
+                    const result = await response.json();
+                    
+                    // Display the result
+                    resultText.textContent = `${result.prediction} (Confidence: ${result.confidence}%)`;
+                    if (result.prediction === 'Creditworthy') {
+                        resultBox.className = 'p-6 rounded-xl text-white text-2xl font-bold bg-green-500';
+                    } else {
+                        resultBox.className = 'p-6 rounded-xl text-white text-2xl font-bold bg-red-500';
+                    }
+                    resultContainer.classList.remove('hidden');
+
+                } catch (error) {
+                    console.error('Prediction failed:', error);
+                    resultText.textContent = `Error: ${error.message}`;
+                    resultBox.className = 'p-6 rounded-xl text-white text-xl font-bold bg-gray-500';
+                    resultContainer.classList.remove('hidden');
+                } finally {
+                    // Hide loader and re-enable button
+                    btnText.classList.remove('hidden');
+                    loader.classList.add('hidden');
+                    submitBtn.disabled = false;
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
